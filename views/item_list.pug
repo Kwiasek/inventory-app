@@ -1,0 +1,15 @@
+extends layout 
+
+block content
+    h1= title 
+
+    if items.length > 0
+        ul 
+            each item in items 
+                li
+                    a(href=item.url) #{item.name}
+    else
+        strong There are no items.
+    hr
+    p
+        a(href="/inventory/item/create") Create item

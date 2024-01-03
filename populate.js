@@ -90,7 +90,7 @@ async function createCategories() {
   await Promise.all([
     categoryCreate(
       0,
-      "Shirt",
+      "Shirts",
       "Shirt Section: This category encompasses a diverse range of shirts, including T-shirts, dress shirts, and casual tops."
     ),
     categoryCreate(
@@ -100,7 +100,7 @@ async function createCategories() {
     ),
     categoryCreate(
       2,
-      "Shoe",
+      "Shoes",
       "Shoe Section: Explore a comprehensive assortment of footwear, covering sneakers, boots, formal shoes, and more."
     ),
   ]);

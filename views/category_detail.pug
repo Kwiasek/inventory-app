@@ -1,0 +1,21 @@
+extends layout 
+
+block content
+    h2= category.name + " category"
+    p= category.desc 
+    h4 Items: 
+    if items.length > 0
+        each item in items
+            p 
+                a(href=item.url) #{item.name}
+                p= item.desc
+            hr
+    else 
+        strong No items found in this category
+    
+    p 
+        a(href=category.url + '/delete') Delete
+    p 
+        a(href=category.url + '/update') Update
+
+        

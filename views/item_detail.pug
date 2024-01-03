@@ -1,0 +1,16 @@
+extends layout 
+
+block content
+    h2= item.name
+    h3 
+        a(href=item.category.url) #{item.category.name}
+    h4 Price: $#{item.price} 
+    p= item.desc 
+
+    hr
+    p 
+        a(href=item.url + '/delete') Delete
+    p 
+        a(href=item.url + '/update') Update
+
+        

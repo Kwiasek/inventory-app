@@ -1,7 +1,25 @@
 doctype html
-html
+html(lang="en")
   head
     title= title
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css", integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N", crossorigin="anonymous")
+    script(src="https://code.jquery.com/jquery-3.5.1.slim.min.js", integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj", crossorigin="anonymous")
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js", integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+", crossorigin="anonymous")
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    div(class="container-fluid")
+      div(class="row")
+        block sidebar 
+          nav(class="navbar navbar-expand-lg")
+            div(class="container-fluid")
+              a(href="/inventory" class="navbar-brand") Home
+              div(class="navbar-nav")
+                a(class="nav-link" href="/inventory/categories") Categories
+                a(class="nav-link" href="/inventory/items") Items
+                form(class="d-flex" role="search" method="post" action="/inventory/item/search")
+                  input(class="form-control me-2" type="search" placeholder="Search for items" aria-label="Search")
+                  button(class="btn btn-outline-success" type="submit") Search
+
     block content

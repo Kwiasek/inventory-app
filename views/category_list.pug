@@ -1,0 +1,16 @@
+extends layout 
+
+block content
+    h1= title 
+
+    if categories.length > 0
+        ul 
+            each category in categories 
+                li
+                    a(href=category.url) #{category.name}
+    else 
+        strong There are no categories.
+    
+    p
+        a(href="/category/create") Create category
+        
