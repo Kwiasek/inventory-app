@@ -2,11 +2,11 @@ const Item = require("../models/item");
 const Category = require("../models/item");
 
 const asyncHandler = require("express-async-handler");
+const { body, validationResult } = require("express-validator");
 
 exports.items_list = asyncHandler(async (req, res, next) => {
   const allItems = await Item.find().exec();
 
-  console.log(allItems);
   if (allItems === null) {
     const err = new Error("Items not found");
     err.status = 404;
@@ -59,9 +59,23 @@ exports.item_update_post = asyncHandler(async (req, res, next) => {
 });
 
 exports.item_search_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Get item search");
+  const result = await Item.find({ name: req.body.search }).exec();
+  res.render("item_search", { title: "Search results", results: result });
 });
 
-exports.item_search_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Post item search");
-});
+exports.item_search_post = [
+  body("search", "Request must not be empty")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+    const result = await Item.find({ name: req.body.search }).exec();
+    console.log(result);
+    res.render("item_search", {
+      title: "Search result",
+      results: result,
+    });
+  }),
+];

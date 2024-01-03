@@ -1,0 +1,12 @@
+extends layout 
+
+block content 
+
+    h1= title 
+
+    if results.length == 0
+        strong There are no results for given query.
+    else
+        each result in results 
+            a(href=result.url) #{result.name}
+            p= result.desc 
