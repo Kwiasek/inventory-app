@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const CategorySchema = new Schema({
-  name: { type: String, required: true, minLength: 3, maxLength: 100 },
-  desc: { type: String, required: true, minLength: 3, maxLength: 150 },
+  name: { type: String, required: true, minLength: 3, maxLength: 30 },
+  desc: { type: String, required: true, maxLength: 300 },
 });
 
 CategorySchema.virtual("url").get(function () {
