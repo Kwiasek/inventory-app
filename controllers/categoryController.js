@@ -5,8 +5,14 @@ const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
 exports.index = asyncHandler(async (req, res, next) => {
+  const [itemsCount, categoriesCount] = await Promise.all([
+    Item.countDocuments({}).exec(),
+    Category.countDocuments({}).exec(),
+  ]);
   res.render("index", {
-    title: "Inventory app home",
+    title: "Inventory app",
+    items: itemsCount,
+    categories: categoriesCount,
   });
 });
 
@@ -20,7 +26,7 @@ exports.category_list = asyncHandler(async (req, res, next) => {
   }
 
   res.render("category_list", {
-    title: "Category List",
+    title: "Categories list",
     categories: allCategories,
   });
 });
@@ -31,7 +37,6 @@ exports.category_detail = asyncHandler(async (req, res, next) => {
     Item.find({ category: req.params.id }, "name desc url").exec(),
   ]);
 
-  console.log(itemsFromCategory);
   if (category === null) {
     const err = new Error("Category not found");
     err.status = 404;
@@ -67,8 +72,6 @@ exports.category_create_post = [
     const category = await Category.find({ name: req.body.name }).exec();
     const errors = validationResult(req);
 
-    console.log(category);
-
     const newCategory = new Category({
       name: req.body.name,
       desc: req.body.desc,
@@ -89,11 +92,39 @@ exports.category_create_post = [
 ];
 
 exports.category_delete_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Get category delete");
+  const [category, itemsInCategory] = await Promise.all([
+    Category.findById(req.params.id).exec(),
+    Item.find({ category: req.params.id }).exec(),
+  ]);
+
+  if (category === null) {
+    const err = new Error("Category not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  res.render("category_delete", {
+    title: "Delete category",
+    category: category,
+    items: itemsInCategory,
+  });
 });
 
 exports.category_delete_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Post category delete");
+  const [category, itemsInCategory] = await Promise.all([
+    Category.findById(req.body.categoryid).exec(),
+    Item.find({ category: req.body.categoryid }).exec(),
+  ]);
+  if (itemsInCategory.length > 0) {
+    res.render("category_delete", {
+      title: "Delete category",
+      items: itemsInCategory,
+      category: category,
+    });
+  } else {
+    await Category.findByIdAndDelete(req.body.categoryid).exec();
+    res.redirect("/inventory/categories");
+  }
 });
 
 exports.category_update_get = asyncHandler(async (req, res, next) => {

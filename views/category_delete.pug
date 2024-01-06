@@ -1,0 +1,16 @@
+extends layout
+
+block content 
+    h1= title 
+    if items.length > 0
+        p Before you can delete this category, you must delete these items:
+        each item in items 
+            a(href=item.url) #{item.name}
+            p= item.desc 
+            hr
+    else 
+        strong Are you sure u want to delete #{category.name}?
+        form(method="POST")
+            div.form-group
+            input(type="hidden" name="categoryid" value=category._id)
+            button.btn.btn-danger(type="submit") Delete
