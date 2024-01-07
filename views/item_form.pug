@@ -5,7 +5,7 @@ block content
     form(method="POST")
         div.form-group
             label(for="name") Item name: 
-            input#name.form-control(type="text" name="name" placeholder="e.g. Super Cool Shirt" required value=(undefined === item ? '' : item.name))
+            input#name.form-control(type="text" name="name" placeholder="e.g. Super Cool Shirt" required value=(undefined === item ? '' : item.name) minlength=3 maxlength=30)
         div.form-group
             label(for="category") Select category:
             select#category.form-control(name ="category" required)
@@ -23,10 +23,10 @@ block content
             p <textarea id="desc" class="form-control" row="2" name="desc" placeholder="e.g. This shirt is made from cool materials">#{(undefined === item ? '' : item.desc)}</textarea>
         div.form-group
             label(for="price") Item price:
-            input#price.form-control(type="number" name="price" placeholder="4.99" required value=(undefined === item ? '' : item.price))
+            input#price.form-control(type="number" name="price" placeholder="4,99" min=1 step=0.01 required value=(undefined === item ? '' : item.price))
         div.form-group
             label(for="quantity") Items in stock: 
-            input#quantity.form-control(type="number" name="quantity" placeholder="20" required value=(undefined === item ? '' : item.quantity))
+            input#quantity.form-control(type="number" name="quantity" placeholder="20" min=0 required value=(undefined === item ? '' : item.quantity))
         div.form-group
             button.btn.btn-primary(type="submit") Submit 
 
