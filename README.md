@@ -1,5 +1,4 @@
 # Inventory App
----
 
 ## Description
 
